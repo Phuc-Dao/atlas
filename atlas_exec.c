@@ -97,5 +97,17 @@ static int exec_send_cmd (const char* cmd, FILE* stream) {
     return EIO;
 }
 
-
+static void* atlas_thread (void* arg) {
+    atlas_backend_thread_ctx* ctx = arg;
+    char* cmd = NULL;
+    
+    //Read buffer
+    size_t const res_size = 4096;
+    char* const res_buf = malloc (res_size);
+    if(!res_buf) {
+	ctx->errn = ENOMEM;
+	pthread_cond_signal (&ctx->cond);
+	goto init_error;
+    }
+}
 
