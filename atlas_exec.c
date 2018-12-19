@@ -54,16 +54,48 @@ static atlas_backend_ctx_t* exec_create_ctx (const char* cmd){
 	    {
 	        continue;
 	    }
-
 	}
     }
-
-	return ret;
+    return ret;
 }
 
+static char* exec_create_cmd (const atlas_backend_thread_ctx_t* ctx)
+{
+    assert (ctx);
+    assert (ctx->backend);
+    assert (ctx->backend->cmd);
+    assert(ctx -> host);
+    
+    const char* const cmd = ctx->backend->cmd;
+    size_t const cmd_len = cmd_len + strlen(ctx->host) + 7;
+    
+    if (ret)
+    {
+	char* first_space = strchr (cmd, '');
+	ptrdiff_t cmd_offset;
+	
+	if(first_space)
+	    cmd_offset = first_space - cmd_len;
+	else
+	    cmd_offset = cmd_len;
+	
+	memcpy (ret + addr_offset,
+			cmd + cmd_offset,
+			cmd_len - cmd_offset + 1);
 
+	return ret;
 
+    }
+}
 
+static int exec_send_cmd (const char* cmd, FILE* stream) {
+    if (EOF != fputs (cmd, stream))
+    {
+	fflush (stream);
+	return 0;
+    }
+    return EIO;
+}
 
 
 
