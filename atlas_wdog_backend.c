@@ -21,8 +21,7 @@ atlas_backend_probe (glb_backend_thread_ctx_t* const ctx,
 {
     memset (res, 0, sizeof(*res));
     res->state = GLB_DST_NOTFOUND;
-
-    if (pthread_mutex_lock (&ctx->lock)) abort();
+    
 
     if (!ctx->quit && !ctx->join)
     {
@@ -32,7 +31,6 @@ atlas_backend_probe (glb_backend_thread_ctx_t* const ctx,
             *res = ctx->result;
     }
 
-    if (pthread_mutex_unlock (&ctx->lock)) abort();
 }
 
 /*! Sample dummy backend context. */
@@ -48,7 +46,6 @@ backend_dummy_destroy (atlas_backend_ctx_t* ctx)
     free (ctx);
 }
 
-/*! A helper to add nanosecond interval to struct timespec date */
 static inline void
 backend_timespec_add (struct timespec* t, long long i)
 {
