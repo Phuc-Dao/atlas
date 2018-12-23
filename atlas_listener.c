@@ -14,6 +14,9 @@
 #include <errno.h>
 #include <string.h>
 #include <poll.h>
+#include <connection.h>
+#include <connectionDB.h>
+
 
 #ifndef _GNU_SOURCE
 #include <fcntl.h>
